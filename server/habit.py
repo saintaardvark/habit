@@ -1,9 +1,27 @@
-from flask import Flask, request
+from flask import Flask, redirect, request, render_template, url_for
+from flask_sqlalchemy import SQLAlchemy
 
-from classes import Habit, db
+# from classes import Habit
 
-db.create_all()
 app = Flask(__name__)
+db = SQLAlchemy(app)
+db.create_all()
+
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db"
+app.config["TEMPLATE_AUTO_RELOAD"] = True
+
+
+class Habit(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    habitname = db.Column(db.String(80), unique=True, nullable=False)
+
+
+class LoggedHabit(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    habit_id = db.Column(db.Integer, db.ForeignKey("Habit.id"))
+    log_time = db.Column(db.DateTime)
+
 
 TEST_HABITS = ["veggie meal", "stretches", "cardio exercise"]
 
@@ -22,30 +40,21 @@ def hello_world():
     return "<p>Hello, world!</p>"
 
 
-@app.route("/habit")
+@app.route("/habit", methods=["GET", "POST"])
 def get_habit():
     """
-    Get habits
+    Habits
     """
-    body = "<h1>Habits</h1><div id='habits'><ul>"
+    if request.method == "POST":
+        habit = request.form["habit"]
+        TEST_HABITS.append(habit)
+        new_entry = Habit(habitname=habit)
+        db.session.add(new_entry)
+        db.session.commit()
+
     habits = Habit.query.all()
-    for habit in habits:
-        body += f"<li>{habit.habitname}</li>"
-
-    body += "</ul>"
-    return body
+    return render_template("habits.html", habits=habits)
 
 
-@app.route("/habit/<habit>", methods=["POST"])
-def create_habit(habit):
-    """
-    Create habit
-    """
-    TEST_HABITS.append(habit)
-    new_entry = Habit(habitname=habit)
-    db.session.add(new_entry)
-    db.session.commit()
-    return f"Added {habit}"
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     db.app.run()
