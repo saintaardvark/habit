@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db"
 app.config["TEMPLATE_AUTO_RELOAD"] = True
-
+app.config["DEBUG"] = True
 
 class Habit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
