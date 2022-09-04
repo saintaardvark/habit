@@ -44,13 +44,12 @@ def hello_world():
 
 
 @app.route("/habit", methods=["GET", "POST"])
-def get_habit():
+def habit():
     """
     Habits
     """
     if request.method == "POST":
         habit = request.form["habit"]
-        TEST_HABITS.append(habit)
         new_entry = Habit(habitname=habit)
         db.session.add(new_entry)
         db.session.commit()
