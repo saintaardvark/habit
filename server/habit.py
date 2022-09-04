@@ -15,6 +15,7 @@ app.config["DEBUG"] = True
 
 class Habit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    # TODO: snake case this
     habitname = db.Column(db.String(80), unique=True, nullable=False)
 
 
