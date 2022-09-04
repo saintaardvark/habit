@@ -7,7 +7,12 @@
   <div id="habit_list">
     <ul>
         {% for habit in habits %}
-          <li>{{ habit.habitname }}</li>
+        <li>{{ habit.habitname }}</li>
+	<div "log_{{ habit.habitname }}">
+	  <form action="{{ url_for('log_habit') }}" method="post">
+	    <input type="submit" name="log"
+		   value="Log {{ habit.habitname }}" />
+	  </form>
         {% endfor %}
     </ul>
   </div>
