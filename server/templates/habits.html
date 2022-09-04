@@ -1,0 +1,22 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h1>Habits</h1>
+  <div id="habit_list">
+    <ul>
+        {% for habit in habits %}
+          <li>{{ habit.habitname }}</li>
+        {% endfor %}
+    </ul>
+  </div>
+
+  <div id="new_habit">
+    <form action = "{{request.path}}" method="post">
+      <label for="habit">Habit</label><br>
+      <input type="text" name="habit" placeholder="Habit" />
+      <input type="submit" value="Submit">
+    </form>
+
+  {% endblock %}
