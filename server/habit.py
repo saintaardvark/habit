@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
-db.create_all()
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db"
@@ -23,6 +22,7 @@ class LoggedHabit(db.Model):
     log_time = db.Column(db.DateTime)
 
 
+db.create_all()
 TEST_HABITS = ["veggie meal", "stretches", "cardio exercise"]
 
 # TODO: Only needed the once...
