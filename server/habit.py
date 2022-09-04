@@ -58,5 +58,20 @@ def habit():
     return render_template("habits.html", habits=habits)
 
 
+@app.route("/log_habit", methods=["POST"])
+def log_habit():
+    """
+    Habits
+    """
+    app.logger.debug(f"Form: {request.form}")
+    habitname = request.form["log"].split()[-1]
+
+    habit = Habit.query.filter_by(habitname=habitname).first()
+    new_log = LoggedHabit(habit_id=habit.id)
+    db.session.add(new_log)
+    db.session.commit()
+    return redirect(url_for("habit"))
+
+
 if __name__ == "__main__":
     db.app.run()
