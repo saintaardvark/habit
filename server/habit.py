@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Flask, redirect, request, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 
@@ -16,10 +18,11 @@ class Habit(db.Model):
     habitname = db.Column(db.String(80), unique=True, nullable=False)
 
 
+# TODO: a better name for this class would be HabitLog
 class LoggedHabit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    habit_id = db.Column(db.Integer, db.ForeignKey("Habit.id"))
-    log_time = db.Column(db.DateTime)
+    habit_id = db.Column(db.Integer, db.ForeignKey("habit.id"))
+    log_time = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 db.create_all()
