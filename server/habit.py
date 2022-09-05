@@ -83,13 +83,20 @@ def calendar(habit_id):
     Show calendar for individual habit
     """
     habit = Habit.query.filter_by(id=habit_id).first()
-    log = db.session.query(
-        Habit.id.label("id"), Habit.habitname.label("habitname"), LoggedHabit.log_time.label("log_time")
-    ).where(
-        Habit.id == LoggedHabit.habit_id
-    ).all()
+    log = (
+        db.session.query(
+            Habit.id.label("id"),
+            Habit.habitname.label("habitname"),
+            LoggedHabit.log_time.label("log_time"),
+        )
+        .where(Habit.id == habit.id)
+        .where(Habit.id == LoggedHabit.habit_id)
+        .all()
+    )
 
-    return render_template("calendar.html", log=log, habit_id=habit_id, habitname=habit.habitname)
+    return render_template(
+        "calendar.html", log=log, habit_id=habit_id, habitname=habit.habitname
+    )
 
 if __name__ == "__main__":
     db.app.run()
