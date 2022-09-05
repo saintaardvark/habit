@@ -36,15 +36,7 @@ TEST_HABITS = ["veggie meal", "stretches", "cardio exercise"]
 #     db.session.commit()
 
 
-@app.route("/")
-def hello_world():
-    """
-    Main function
-    """
-    return "<p>Hello, world!</p>"
-
-
-@app.route("/habit", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def habit():
     """
     Habits
