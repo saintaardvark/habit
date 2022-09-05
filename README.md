@@ -56,7 +56,7 @@ to:
 * [SQLite](https://sqlite.org)
 * [cal-heatmap](https://cal-heatmap.com/)
 * [Bootstrap](https://getbootstrap.com)
-* [Jquery](https://jquery.com)
+* [JQuery](https://jquery.com)
 * And of course, [Python](https://python.org)
 
 # License
