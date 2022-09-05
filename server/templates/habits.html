@@ -18,7 +18,11 @@
 
         {% for habit in habits %}
 	<tr>
-	  <td>{{ habit.habitname }}</td>
+	  <td>
+	    <a href="/calendar/{{ habit.id }}">
+	      {{ habit.habitname }}
+	    </a>
+	  </td>
 	  <td>{{ habit.log_time }} </td>
 	  <td>
 	    <div "log_{{ habit.habitname }}">
