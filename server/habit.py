@@ -98,5 +98,28 @@ def calendar(habit_id):
         "calendar.html", log=log, habit_id=habit_id, habitname=habit.habitname
     )
 
+
+# FIXME: Probably need to merge this with log_habit
+@app.route("/log/<habit_id>")
+def log(habit_id):
+    """
+    Get log of habit in JSON form
+    """
+    habit = Habit.query.filter_by(id=habit_id).first()
+    log = (
+        db.session.query(
+            db.func.count(Habit.id).label("count"),
+            Habit.habitname.label("habitname"),
+            LoggedHabit.log_time.label("log_time"),
+        )
+        .where(Habit.id == habit_id)
+        .where(Habit.id == LoggedHabit.habit_id)
+        .group_by(db.func.strftime("%Y-%m-%d", LoggedHabit.log_time))
+        .all()
+    )
+    return_data = {x["log_time"].strftime("%s"): x["count"] for x in log}
+    return return_data
+
+
 if __name__ == "__main__":
     db.app.run()
