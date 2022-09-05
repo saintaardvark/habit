@@ -57,7 +57,7 @@ def habit():
 
 
     # habits = Habit.query.all()
-    # TODO: This is not working yet.
+    # TODO: This does not work if there's no log time for a habit
     habits = db.session.query(
         Habit.id, Habit.habitname, db.func.max(LoggedHabit.log_time).label("log_time")
     ).filter(
