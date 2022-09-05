@@ -49,6 +49,13 @@ Note: this uses (ie, hardcodes) use of an SQLite3 database file named
 
 * TODO: Allow user to delete or update a log entry.
 
+* TODO: Better timestamp formatting.
+
+* TODO: Consistify API, and probably settle on a RESTful design.
+
+* I'm sure there's much overall to improve in the code, the template
+  and the ORM design, but for now this works.
+
 # Thanks
 
 The fact that I can use the work of so many smart people to make
