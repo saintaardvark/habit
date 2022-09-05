@@ -8,61 +8,43 @@
     <link rel="stylesheet" href="/static/css/cal-heatmap.css" />
     <script type="text/javascript" src="/static/js/d3.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="/static/js/cal-heatmap.min.js"></script>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Last done</th>
-          <th>Log</th>
-	  <th>Heatmap</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        {% for habit in habits %}
-	<tr>
-	  <td>
-	    <a href="/calendar/{{ habit.id }}">
-	      {{ habit.habitname }}
-	    </a>
-	  </td>
-	  <td>
-	    {{ habit.log_time }}
-	  </td>
-	  <td>
-	    <div "log_{{ habit.habitname }}">
-	      <form action="{{ url_for('log_habit') }}" method="post">
-		<input type="submit" name="log"
-		       value="Log {{ habit.habitname }}" />
-	      </form>
-	    </div>
-	  </td>
-	  <td>
-	    <div id="cal-heatmap-{{ habit.id }}"></div>
-	    <script type="text/javascript">
-	      var cal = new CalHeatMap();
-	      cal.init({
-		// FIXME: Don't use hardcoded date
-		start: new Date(2022, 0),
-		range: 1,
-		domain: "year",
-		subDomain: "day",
-		data: "/log/{{ habit.id }}",
-		itemSelector: "#cal-heatmap-{{ habit.id }}"
-	      });
-	    </script>
-	  </td>
-	</tr>
-	{% endfor %}
-    </table>
+    {% for habit in habits %}
+    <div class="container-fluid" id="container-habit-{{ habit.habit_id}}">
+      <h2>Habit:
+ 	<a href="/calendar/{{ habit.id }}">
+	  {{ habit.habitname }}
+	</a>
+      </h2>
+      <p>Last done: {{ habit.log_time }}</p>
+      <div "log_{{ habit.habitname }}">
+	<form action="{{ url_for('log_habit') }}" method="post">
+	  <input type="submit" name="log"
+		 value="Log {{ habit.habitname }}" />
+	</form>
+      </div>
+    </div>
+    <div class="container" id="cal-heatmap-{{ habit.id }}"></div>
+    <script type="text/javascript">
+      var cal = new CalHeatMap();
+      cal.init({
+	// FIXME: Don't use hardcoded date
+	start: new Date(2022, 0),
+	range: 12,
+	domain: "month",
+	subDomain: "day",
+	data: "/log/{{ habit.id }}",
+	itemSelector: "#cal-heatmap-{{ habit.id }}"
+      });
+    </script>
+    {% endfor %}
   </div>
+</div>
 
-  <div id="new_habit">
-    <form action = "{{request.path}}" method="post">
-      <label for="habit">Habit</label><br>
-      <input type="text" name="habit" placeholder="Habit" />
-      <input type="submit" value="Submit">
-    </form>
+<div id="new_habit">
+  <form action = "{{request.path}}" method="post">
+    <label for="habit">Habit</label><br>
+    <input type="text" name="habit" placeholder="Habit" />
+    <input type="submit" value="Submit">
+  </form>
 
-    {% endblock     %}
+  {% endblock     %}
