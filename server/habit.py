@@ -55,7 +55,15 @@ def habit():
         db.session.add(new_entry)
         db.session.commit()
 
-    habits = Habit.query.all()
+
+    # habits = Habit.query.all()
+    # TODO: This is not working yet.
+    habits = db.session.query(
+        Habit, LoggedHabit
+    ).filter(
+        Habit.id == LoggedHabit.habit_id
+    ).all()
+    app.logger.debug(habits)
     return render_template("habits.html", habits=habits)
 
 

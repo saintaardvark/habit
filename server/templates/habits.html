@@ -5,23 +5,39 @@
 <div class="page-header">
   <h1>Habits</h1>
   <div id="habit_list">
-    <ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Last done</th>
+          <th>Log</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
         {% for habit in habits %}
-        <li>{{ habit.habitname }}</li>
-	<div "log_{{ habit.habitname }}">
-	  <form action="{{ url_for('log_habit') }}" method="post">
-	    <input type="submit" name="log"
-		   value="Log {{ habit.habitname }}" />
-	  </form>
-        {% endfor %}
-    </ul>
+	<tr>
+	  <td>{{ habit.habitname }}</td>
+	  <td> TODO </td>
+	  <td>
+	    <div "log_{{ habit.habitname }}">
+	      <form action="{{ url_for('log_habit') }}" method="post">
+		<input type="submit" name="log"
+		       value="Log {{ habit.habitname }}" />
+	      </form>
+	    </div>
+	  </td>
+	</tr>
+          {% endfor %}
+    </table>
   </div>
 
-  <div id="new_habit">
-    <form action = "{{request.path}}" method="post">
-      <label for="habit">Habit</label><br>
-      <input type="text" name="habit" placeholder="Habit" />
-      <input type="submit" value="Submit">
-    </form>
+<div id="new_habit">
+  <form action = "{{request.path}}" method="post">
+    <label for="habit">Habit</label><br>
+    <input type="text" name="habit" placeholder="Habit" />
+    <input type="submit" value="Submit">
+  </form>
 
-  {% endblock %}
+  {% endblock     %}
