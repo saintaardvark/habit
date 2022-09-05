@@ -62,14 +62,23 @@ def habit():
     return render_template("habits.html", habits=habits)
 
 
+def normalize_habitname(form_entry):
+    """Normalize habit name from form entry
+
+    TODO: This is needed because we're cramming the name of the habit
+    into the value of the button we use to log that we did a thing.
+    Needless to say, this needs improvement.
+    """
+    return form_entry.strip("Log ")
+
+
 @app.route("/log_habit", methods=["POST"])
 def log_habit():
     """
     Habits
     """
     app.logger.debug(f"Form: {request.form}")
-    habitname = request.form["log"].split()[-1]
-
+    habitname = normalize_habitname(request.form["log"])
     habit = Habit.query.filter_by(habitname=habitname).first()
     new_log = LoggedHabit(habit_id=habit.id)
     db.session.add(new_log)
