@@ -18,7 +18,8 @@
       <p>Last done: {{ habit.log_time }}</p>
       <div "log_{{ habit.habitname }}">
 	<form action="{{ url_for('log_habit') }}" method="post">
-	  <input type="submit" name="log"
+	  <div class="form-group">
+	  <input type="submit" class="form-control btn btn-primary" name="log"
 		 value="Log {{ habit.habitname }}" />
 	</form>
       </div>
