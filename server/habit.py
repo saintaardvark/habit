@@ -59,11 +59,10 @@ def habit():
     # habits = Habit.query.all()
     # TODO: This is not working yet.
     habits = db.session.query(
-        Habit, LoggedHabit
+        Habit.id, Habit.habitname, LoggedHabit.log_time
     ).filter(
         Habit.id == LoggedHabit.habit_id
     ).all()
-    app.logger.debug(habits)
     return render_template("habits.html", habits=habits)
 
 

@@ -19,7 +19,7 @@
         {% for habit in habits %}
 	<tr>
 	  <td>{{ habit.habitname }}</td>
-	  <td> TODO </td>
+	  <td>{{ habit.log_time }} </td>
 	  <td>
 	    <div "log_{{ habit.habitname }}">
 	      <form action="{{ url_for('log_habit') }}" method="post">
