@@ -13,6 +13,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db"
 app.config["TEMPLATE_AUTO_RELOAD"] = True
 app.config["DEBUG"] = True
 
+
 class Habit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # TODO: snake case this
@@ -47,14 +48,16 @@ def habit():
         db.session.add(new_entry)
         db.session.commit()
 
-
-    habits = db.session.query(
-        Habit.id, Habit.habitname, db.func.max(LoggedHabit.log_time).label("log_time")
-    ).join(
-        LoggedHabit, Habit.id == LoggedHabit.habit_id, isouter=True
-    ).group_by(
-        Habit.id
-    ).all()
+    habits = (
+        db.session.query(
+            Habit.id,
+            Habit.habitname,
+            db.func.max(LoggedHabit.log_time).label("log_time"),
+        )
+        .join(LoggedHabit, Habit.id == LoggedHabit.habit_id, isouter=True)
+        .group_by(Habit.id)
+        .all()
+    )
 
     return render_template("habits.html", habits=habits)
 
