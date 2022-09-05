@@ -2,6 +2,10 @@
 
 A very simple web application to track the habits I want to build.
 
+![Screenshot](habit_screenshot.png)
+
+(I shower regularly already, I promise...)
+
 # Usage
 
 Currently I'm deploying this on a server in my home network using the
@@ -24,7 +28,7 @@ or whatever your machine's IP address is).  From there:
   the bottom and hitting "Submit".
 * You can log that you did a particular habit by clicking the "Log
   [habit name]" button.
-  
+
 * You can admire the pretty calendar heat maps on the main page.
 
 * You can click on the habit name to see all the log entries for that
