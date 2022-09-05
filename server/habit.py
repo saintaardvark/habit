@@ -59,9 +59,11 @@ def habit():
     # habits = Habit.query.all()
     # TODO: This is not working yet.
     habits = db.session.query(
-        Habit.id, Habit.habitname, LoggedHabit.log_time
+        Habit.id, Habit.habitname, db.func.max(LoggedHabit.log_time).label("log_time")
     ).filter(
         Habit.id == LoggedHabit.habit_id
+    ).group_by(
+        Habit.id
     ).all()
     return render_template("habits.html", habits=habits)
 
