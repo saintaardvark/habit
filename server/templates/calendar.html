@@ -1,0 +1,32 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Calendar{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h1>Calendar for {{ habitname }}</h1>
+  <div id="calendar">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        {% for line in log %}
+	<tr>
+	  <td>{{ line.log_time }} </td>
+	</tr>
+          {% endfor %}
+    </table>
+  </div>
+
+<div id="new_habit">
+  <form action = "{{request.path}}" method="post">
+    <label for="habit">Habit</label><br>
+    <input type="text" name="habit" placeholder="Habit" />
+    <input type="submit" value="Submit">
+  </form>
+
+  {% endblock     %}
