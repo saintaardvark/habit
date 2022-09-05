@@ -9,7 +9,7 @@ app = Flask(__name__)
 db = SQLAlchemy(app)
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///habits.db"
 app.config["TEMPLATE_AUTO_RELOAD"] = True
 app.config["DEBUG"] = True
 
