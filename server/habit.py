@@ -56,15 +56,14 @@ def habit():
         db.session.commit()
 
 
-    # habits = Habit.query.all()
-    # TODO: This does not work if there's no log time for a habit
     habits = db.session.query(
         Habit.id, Habit.habitname, db.func.max(LoggedHabit.log_time).label("log_time")
-    ).filter(
-        Habit.id == LoggedHabit.habit_id
+    ).join(
+        LoggedHabit, Habit.id == LoggedHabit.habit_id, isouter=True
     ).group_by(
         Habit.id
     ).all()
+
     return render_template("habits.html", habits=habits)
 
 
