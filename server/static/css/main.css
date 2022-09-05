@@ -26,6 +26,9 @@ a {
   background: #555;
   color: #FFF;
 }
+.scrolling-wrapper{
+  overflow-x: auto;
+}
 /* Main elements end */
 
 
