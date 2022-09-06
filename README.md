@@ -42,14 +42,14 @@ Note: this uses (ie, hardcodes) use of an SQLite3 database file named
 
 * I really should be using a WSGI server.
 
+* TODO: Use timezones in dates.  Better timestamp formatting.
+
 * TODO: Add authentication.  Currently there's no authentication at
   all...zero.
 
 * TODO: Allow user to delete or rename a habit.
 
 * TODO: Allow user to delete or update a log entry.
-
-* TODO: Better timestamp formatting.
 
 * TODO: Consistify API, and probably settle on a RESTful design.
 
