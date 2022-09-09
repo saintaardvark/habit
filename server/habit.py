@@ -38,9 +38,9 @@ TEST_HABITS = ["veggie meal", "stretches", "cardio exercise"]
 
 
 @app.route("/", methods=["GET", "POST"])
-def habit():
+def index():
     """
-    Habits
+    Index page
     """
     if request.method == "POST":
         habit = request.form["habit"]
@@ -83,7 +83,7 @@ def log_habit():
     new_log = LoggedHabit(habit_id=habit.id)
     db.session.add(new_log)
     db.session.commit()
-    return redirect(url_for("habit"))
+    return redirect(url_for("index"))
 
 
 @app.route("/calendar/<habit_id>")
