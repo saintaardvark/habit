@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from flask import Flask, redirect, request, render_template, url_for
+from flask import Flask, jsonify, redirect, request, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 # from classes import Habit
@@ -132,6 +132,17 @@ def log(habit_id):
     )
     return_data = {x["log_time"].strftime("%s"): x["count"] for x in log}
     return return_data
+
+
+@app.route("/habit/<habit_id>")
+def habit(habit_id):
+    """
+    Return JSON info for habit
+    """
+    app.logger.debug(habit_id)
+    habit = Habit.query.filter_by(id=habit_id).first()
+    app.logger.debug(habit)
+    return jsonify(habit)
 
 
 if __name__ == "__main__":
