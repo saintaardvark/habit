@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from datetime import datetime
 
 from flask import Flask, redirect, request, render_template, url_for
@@ -14,17 +15,20 @@ app.config["TEMPLATE_AUTO_RELOAD"] = True
 app.config["DEBUG"] = True
 
 
+@dataclass
 class Habit(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+
+    id: int = db.Column(db.Integer, primary_key=True)
     # TODO: snake case this
-    habitname = db.Column(db.String(80), unique=True, nullable=False)
+    habitname: str = db.Column(db.String(80), unique=True, nullable=False)
 
 
 # TODO: a better name for this class would be HabitLog
+@dataclass
 class LoggedHabit(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    habit_id = db.Column(db.Integer, db.ForeignKey("habit.id"))
-    log_time = db.Column(db.DateTime, default=datetime.utcnow)
+    id: int = db.Column(db.Integer, primary_key=True)
+    habit_id: int = db.Column(db.Integer, db.ForeignKey("habit.id"))
+    log_time: datetime  = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 db.create_all()
