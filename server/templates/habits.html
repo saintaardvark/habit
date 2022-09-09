@@ -22,9 +22,30 @@
 	  <p>Last done: {{ habit.log_time }}</p>
 	</div>
 	<div class="col-sm" id="container-delete-habit-{{ habit.id }}">
-	  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+	  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-habit-{{ habit.id }}-Modal">
 	    Delete this habit
 	  </button>
+	</div>
+	<div class="modal fade" id="delete-habit-{{ habit.id }}-Modal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<h5 class="modal-title" id="deleteModalLabel">Delete this habit?</h5>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+		<p>
+		  Are you sure you want to delete the habit
+		  "{{habit.habitname }}" and all its logs?  This can't be
+		  recovered afterward.
+		</p>
+	      </div>
+	      <div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, stop</button>
+		<button type="button" class="btn btn-primary" onclick="deleteHabit({{ habit.id }})">Yes, delete it</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
       </div>
       <div class="row gx-5">
@@ -62,26 +83,6 @@
       <input type="text" name="habit" placeholder="Habit" />
       <input type="submit" value="Submit">
     </form>
-  </div>
-
-  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-	<div class="modal-header">
-	  <h5 class="modal-title" id="deleteModalLabel">Delete this habit?</h5>
-	  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	</div>
-	<div class="modal-body">
-	  <p>
-	    Are you sure you want to delete this habit and all its logs?  This can't be recovered afterward.
-	  </p>
-	</div>
-	<div class="modal-footer">
-	  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, stop</button>
-	  <button type="button" class="btn btn-primary">Yes, delete it</button>
-	</div>
-      </div>
-    </div>
   </div>
 </div>
 
