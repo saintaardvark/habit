@@ -76,14 +76,12 @@ def normalize_habitname(form_entry):
     return form_entry.strip("Log ")
 
 
-@app.route("/log_habit", methods=["POST"])
-def log_habit():
+@app.route("/log_habit/<habit_id>", methods=["POST"])
+def log_habit(habit_id):
     """
     Habits
     """
-    app.logger.debug(f"Form: {request.form}")
-    habitname = normalize_habitname(request.form["log"])
-    habit = Habit.query.filter_by(habitname=habitname).first()
+    habit = Habit.query.filter_by(id=habit_id).first()
     new_log = LoggedHabit(habit_id=habit.id)
     db.session.add(new_log)
     db.session.commit()
