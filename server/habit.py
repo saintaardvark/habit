@@ -132,16 +132,20 @@ def log(habit_id):
     return return_data
 
 
-@app.route("/habit/<habit_id>")
+@app.route("/habit/<habit_id>", methods=["GET", "DELETE"])
 def habit(habit_id):
     """
     Return JSON info for habit
     """
     app.logger.debug(habit_id)
-    habit = Habit.query.filter_by(id=habit_id).first()
-    app.logger.debug(habit)
-    return jsonify(habit)
+    if request.method == "GET":
+        habit = Habit.query.filter_by(id=habit_id).first()
+        app.logger.debug(habit)
+        return jsonify(habit)
 
+    elif request.method == "DELETE":
+        Habit.query.filter_by(id=habit_id).delete()
+        return {}
 
 if __name__ == "__main__":
     db.app.run()
