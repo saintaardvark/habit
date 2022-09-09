@@ -28,6 +28,7 @@ a {
 }
 .scrolling-wrapper{
   overflow-x: auto;
+  padding: 12px;
 }
 /* Main elements end */
 
