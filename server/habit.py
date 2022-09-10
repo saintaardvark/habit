@@ -28,7 +28,7 @@ class Habit(db.Model):
 class LoggedHabit(db.Model):
     id: int = db.Column(db.Integer, primary_key=True)
     habit_id: int = db.Column(db.Integer, db.ForeignKey("habit.id"))
-    log_time: datetime  = db.Column(db.DateTime, default=datetime.utcnow)
+    log_time: datetime = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 db.create_all()
