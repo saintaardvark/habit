@@ -76,18 +76,6 @@ def normalize_habitname(form_entry):
     return form_entry.strip("Log ")
 
 
-@app.route("/log_habit/<habit_id>", methods=["POST"])
-def log_habit(habit_id):
-    """
-    Habits
-    """
-    habit = Habit.query.filter_by(id=habit_id).first()
-    new_log = LoggedHabit(habit_id=habit.id)
-    db.session.add(new_log)
-    db.session.commit()
-    return redirect(url_for("index"))
-
-
 @app.route("/calendar/<habit_id>")
 def calendar(habit_id):
     """
@@ -110,13 +98,16 @@ def calendar(habit_id):
     )
 
 
-# FIXME: Probably need to merge this with log_habit
-@app.route("/log/<habit_id>")
+@app.route("/log/<habit_id>", methods=["GET", "POST"])
 def log(habit_id):
     """
-    Get log of habit in JSON form
+    GET log of habit in JSON form, or POST to add a log entry
     """
     habit = Habit.query.filter_by(id=habit_id).first()
+    if request.method == "POST":
+        new_log = LoggedHabit(habit_id=habit_id)
+        db.session.add(new_log)
+        db.session.commit()
     log = (
         db.session.query(
             db.func.count(Habit.id).label("count"),

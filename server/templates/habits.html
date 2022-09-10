@@ -50,7 +50,7 @@
       </div>
       <div class="row gx-5">
 	<div class="col-sm" id="log_{{ habit.habitname }}">
-	  <form action="{{ url_for('log_habit', habit_id=habit.id) }}" method="post">
+	  <form action="{{ url_for('log', habit_id=habit.id) }}" method="post">
 	    <div class="form-group">
 	      <input type="submit" class="form-control btn btn-primary" name="log"
 		     value="Log {{ habit.habitname }}" />
