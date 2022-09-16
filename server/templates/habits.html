@@ -50,12 +50,11 @@
       </div>
       <div class="row gx-5">
 	<div class="col-sm" id="log_{{ habit.habitname }}">
-	  <form action="{{ url_for('log', habit_id=habit.id) }}" method="post">
-	    <div class="form-group">
-	      <input type="submit" class="form-control btn btn-primary" name="log"
-		     value="Log {{ habit.habitname }}" />
-	  </form>
-	  </div>
+	  <button type="button" class="btn btn-primary" name="log"
+		  onclick="incrementHabit({{ habit.id }})"
+		  value="Log {{ habit.habitname }}">
+	    Log
+	  </button>
 	</div>
       </div>
       <div class="row align-items-center">
