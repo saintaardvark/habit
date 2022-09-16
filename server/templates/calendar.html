@@ -26,11 +26,12 @@
     <div id="cal-heatmap"></div>
     <script type="text/javascript">
       var cal = new CalHeatMap();
+      startTime = new Date();
+      startTime.setMonth(startTime.getMonth() - 6);
       cal.init({
-	// FIXME: Don't use hardcoded date
-	start: new Date(2022, 0),
-	range: 1,
-	domain: "year",
+	start: startTime,
+	range: 12,
+	domain: "month",
 	subDomain: "day",
 	data: "/log/{{ habit_id }}"
       });
