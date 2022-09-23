@@ -53,6 +53,11 @@ Note: this uses (ie, hardcodes) use of an SQLite3 database file named
 
 * TODO: Consistify API, and probably settle on a RESTful design.
 
+* TODO: I show only a month when [a mobile device is
+  detected](https://stackoverflow.com/a/24600597).  I'd like a button
+  to allow a manual toggle.  I'm also sure this method could be
+  refactored.
+
 * I'm sure there's much overall to improve in the code, the template
   and the ORM design, but for now this works.
 
