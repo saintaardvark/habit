@@ -32,3 +32,16 @@ async function incrementHabit(id){
   console.log(myJson);
   location.href="/";
 };
+
+async function showHeatMap(id) {
+  var cal = new CalHeatMap();
+  cal.init({
+    start: new Date(),
+    range: 1,
+    domain: "month",
+    subDomain: "day",
+    data: `/log/${id}`,
+    itemSelector: `#cal-heatmap-${id}`
+  });
+
+}
