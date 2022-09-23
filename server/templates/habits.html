@@ -60,15 +60,9 @@
       <div class="row align-items-center">
 	<div class="scrolling-wrapper col-sm gap-3" id="cal-heatmap-{{ habit.id }}"></div>
 	<script type="text/javascript">
-	  var cal = new CalHeatMap();
-	  cal.init({
-	    start: new Date(),
-	    range: 1,
-	    domain: "month",
-	    subDomain: "day",
-	    data: "/log/{{ habit.id }}",
-	    itemSelector: "#cal-heatmap-{{ habit.id }}"
-	  });
+	 $(document).ready(function() {
+	   showHeatMap({{ habit.id }});
+	 });
 	</script>
 	{% endfor %}
       </div>
