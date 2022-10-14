@@ -55,6 +55,7 @@ async function showHeatMap(id) {
     subDomain: subDomain,
     legend: legend,
     data: `/log/${id}`,
+    highlight: "now",
     itemSelector: `#cal-heatmap-${id}`
   });
 }
