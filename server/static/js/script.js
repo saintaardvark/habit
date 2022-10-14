@@ -39,6 +39,10 @@ async function showHeatMap(id) {
   let domain = "month";
   let subDomain = "day";
   let range = 12;
+  // See https://cal-heatmap.com/#legend for details, but this assumes
+  // a habit frequency of 1-3 times a day, with anything over that a
+  // wonderful bonus.
+  let legend = [0, 1, 2, 3, 4];
   if (/Mobi/.test(navigator.userAgent)) {
     startTime = new Date();
     range = 1;
@@ -49,6 +53,7 @@ async function showHeatMap(id) {
     range: range,
     domain: domain,
     subDomain: subDomain,
+    legend: legend,
     data: `/log/${id}`,
     itemSelector: `#cal-heatmap-${id}`
   });
