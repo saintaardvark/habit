@@ -33,6 +33,10 @@ async function incrementHabit(id){
   location.href="/";
 };
 
+async function isMobile() {
+  return (/Mobi/.test(navigator.userAgent));
+}
+
 async function showHeatMap(id) {
   let startTime = new Date();
   startTime.setMonth(startTime.getMonth() - 6);
@@ -43,7 +47,7 @@ async function showHeatMap(id) {
   // a habit frequency of 1-3 times a day, with anything over that a
   // wonderful bonus.
   let legend = [0, 1, 2, 3, 4];
-  if (/Mobi/.test(navigator.userAgent)) {
+  if (await isMobile()) {
     startTime = new Date();
     range = 1;
   }
