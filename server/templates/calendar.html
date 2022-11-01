@@ -8,6 +8,21 @@
     <link rel="stylesheet" href="/static/css/cal-heatmap.css" />
     <script type="text/javascript" src="/static/js/d3.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="/static/js/cal-heatmap.min.js"></script>
+    <div id="cal-heatmap"></div>
+    <script type="text/javascript">
+      var cal = new CalHeatMap();
+      startTime = new Date();
+      startTime.setMonth(startTime.getMonth() - 6);
+      cal.init({
+	start: startTime,
+	range: 12,
+	domain: "month",
+	subDomain: "day",
+	data: "/log/{{ habit_id }}"
+      });
+    </script>
+  </div>
+  <div id="log">
     <table>
       <thead>
         <tr>
@@ -23,19 +38,6 @@
 	</tr>
         {% endfor %}
     </table>
-    <div id="cal-heatmap"></div>
-    <script type="text/javascript">
-      var cal = new CalHeatMap();
-      startTime = new Date();
-      startTime.setMonth(startTime.getMonth() - 6);
-      cal.init({
-	start: startTime,
-	range: 12,
-	domain: "month",
-	subDomain: "day",
-	data: "/log/{{ habit_id }}"
-      });
-    </script>
   </div>
 </div>
 {% endblock %}
