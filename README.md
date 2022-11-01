@@ -58,6 +58,9 @@ Note: this uses (ie, hardcodes) use of an SQLite3 database file named
   to allow a manual toggle.  I'm also sure this method could be
   refactored.
 
+* TODO: Properly format HTML, CSS and Javascript (or at least pick a
+  style & make things consistent).
+
 * I'm sure there's much overall to improve in the code, the template
   and the ORM design, but for now this works.
 
