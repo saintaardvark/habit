@@ -1,8 +1,8 @@
-(function() {
+(function () {
 
 }).call(this);
 
-$(document).ready(function() {
+$(document).ready(function () {
 });
 
 async function deleteHabit(id){
@@ -16,10 +16,10 @@ async function deleteHabit(id){
   const myJson = await response.json();  // converting to json
 
   console.log(myJson);
-  location.href="/";
+  location.href = "/";
 };
 
-async function incrementHabit(id){
+async function incrementHabit (id){
   console.log("Incrementing habit", id);
   const url = `/log/${id}`;
   console.log("URL is", url);
@@ -30,10 +30,10 @@ async function incrementHabit(id){
   const myJson = await response.json();  // converting to json
 
   console.log(myJson);
-  location.href="/";
+  location.href = "/";
 };
 
-async function isMobile() {
+async function isMobile () {
   return (/Mobi/.test(navigator.userAgent));
 }
 
