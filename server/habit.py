@@ -80,6 +80,16 @@ def normalize_habitname(form_entry):
     return form_entry.strip("Log ")
 
 
+def normalize_log_times(log):
+    """
+    Normalize log times
+    """
+    for line in log:
+        # Debugging:
+        print(line.log_time)
+    return log
+
+
 @app.route("/calendar/<habit_id>")
 def calendar(habit_id):
     """
@@ -96,7 +106,7 @@ def calendar(habit_id):
         .where(Habit.id == LoggedHabit.habit_id)
         .all()
     )
-
+    log = normalize_log_times(log)
     return render_template(
         "calendar.html", log=log, habit_id=habit_id, habitname=habit.habitname
     )
