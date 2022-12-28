@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask import Flask, jsonify, redirect, request, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -14,6 +14,22 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///habits.db"
 app.config["TEMPLATE_AUTO_RELOAD"] = True
 app.config["DEBUG"] = True
 
+# Hat tip to https://mike.depalatis.net/blog/sqlalchemy-timestamps.html
+class TimeStamp(db.TypeDecorator):
+    impl = db.DateTime
+    LOCAL_TIMEZONE = datetime.utcnow().astimezone().tzinfo
+
+    def process_bind_param(self, value: datetime, dialect):
+        if value.tzinfo is None:
+            value = value.astimezone(self.LOCAL_TIMEZONE)
+
+        return value.astimezone(timezone.utc)
+
+    def process_result_value(self, value, dialect):
+        if value.tzinfo is None:
+            return value.replace(tzinfo=timezone.utc)
+
+        return value.astimezone(timezone.utc)
 
 @dataclass
 class Habit(db.Model):
@@ -32,7 +48,7 @@ class LoggedHabit(db.Model):
     # want it to.  See:
     # - https://docs.sqlalchemy.org/en/14/dialects/sqlite.html
     # - https://docs.sqlalchemy.org/en/14/dialects/sqlite.html
-    log_time: datetime = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
+    log_time: datetime = db.Column(TimeStamp)
 
 
 db.create_all()
