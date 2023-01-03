@@ -19,7 +19,7 @@
 	  </h2>
 	</div>
 	<div class="col-sm" id="container-habit-last-done-{{ habit.id }}">
-	  <p>Last done: {{ habit.log_time }}</p>
+	  <p>Last done: {{ habit.log_time.astimezone(local_timezone) }}</p>
 	</div>
 	<div class="col-sm" id="container-delete-habit-{{ habit.id }}">
 	  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-habit-{{ habit.id }}-Modal">

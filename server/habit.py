@@ -94,7 +94,7 @@ def index():
         .all()
     )
 
-    return render_template("habits.html", habits=habits)
+    return render_template("habits.html", habits=habits, local_timezone=LOCAL_TIMEZONE)
 
 
 @app.route("/calendar/<habit_id>")
