@@ -5,3 +5,5 @@ serve: venv
 	cd server && \
 		FLASK_APP=habit flask --debug run --host=0.0.0.0
 
+db:
+	sqlite3 server/habits.db
