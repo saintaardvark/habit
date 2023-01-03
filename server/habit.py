@@ -27,10 +27,15 @@ class TimeStamp(db.TypeDecorator):
     LOCAL_TIMEZONE = LOCAL_TIMEZONE
 
     def process_bind_param(self, value: datetime, dialect):
-        if value.tzinfo is None:
-            value = value.astimezone(self.LOCAL_TIMEZONE)
+        # Note: returning value untouched, on the assumption that the LoggedHabit takes care of
+        # setting the TZ correctly.  If that changes, this is the code that's in the original example:
+        # if value.tzinfo is None:
+        #     app.logger.debug(f"[process_bind_param] tzinfo: None!  about to set to {self.LOCAL_TIMEZONE}")
+        #     value = value.astimezone(self.LOCAL_TIMEZONE)
+        # return value.astimezone(timezone.utc)
 
-        return value.astimezone(timezone.utc)
+        # ...but as it is, we'll just leave it alone:
+        return value
 
     def process_result_value(self, value, dialect):
         if value.tzinfo is None:
