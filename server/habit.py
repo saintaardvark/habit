@@ -14,10 +14,17 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///habits.db"
 app.config["TEMPLATE_AUTO_RELOAD"] = True
 app.config["DEBUG"] = True
 
+# Note:  We're setting the timezone based on where the serve is running.
+# This is *heavily* optimized for my use case, where:
+# a) I'm running this on my li'l home server,
+# b) its timezone is set to America/Vancouver, and
+# c) that matches my own timezone as well.
+LOCAL_TIMEZONE = datetime.utcnow().astimezone().tzinfo
+
 # Hat tip to https://mike.depalatis.net/blog/sqlalchemy-timestamps.html
 class TimeStamp(db.TypeDecorator):
     impl = db.DateTime
-    LOCAL_TIMEZONE = datetime.utcnow().astimezone().tzinfo
+    LOCAL_TIMEZONE = LOCAL_TIMEZONE
 
     def process_bind_param(self, value: datetime, dialect):
         if value.tzinfo is None:
