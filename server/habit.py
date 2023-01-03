@@ -43,6 +43,7 @@ class TimeStamp(db.TypeDecorator):
 
         return value.astimezone(timezone.utc)
 
+
 @dataclass
 class Habit(db.Model):
 
@@ -116,7 +117,11 @@ def calendar(habit_id):
     # This is *very* optimized for my use case.  For more details, see the
     # comment for LOCAL_TIMEZONE.
     return render_template(
-        "calendar.html", log=log, habit_id=habit_id, habitname=habit.habitname, local_timezone=LOCAL_TIMEZONE
+        "calendar.html",
+        log=log,
+        habit_id=habit_id,
+        habitname=habit.habitname,
+        local_timezone=LOCAL_TIMEZONE,
     )
 
 
@@ -160,6 +165,7 @@ def habit(habit_id):
         Habit.query.filter_by(id=habit_id).delete()
         db.session.commit()
         return {}
+
 
 if __name__ == "__main__":
     db.app.run()
