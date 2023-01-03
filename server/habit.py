@@ -97,26 +97,6 @@ def index():
     return render_template("habits.html", habits=habits)
 
 
-def normalize_habitname(form_entry):
-    """Normalize habit name from form entry
-
-    TODO: This is needed because we're cramming the name of the habit
-    into the value of the button we use to log that we did a thing.
-    Needless to say, this needs improvement.
-    """
-    return form_entry.strip("Log ")
-
-
-def normalize_log_times(log):
-    """
-    Normalize log times
-    """
-    for line in log:
-        # Debugging:
-        print(line.log_time)
-    return log
-
-
 @app.route("/calendar/<habit_id>")
 def calendar(habit_id):
     """
@@ -133,7 +113,6 @@ def calendar(habit_id):
         .where(Habit.id == LoggedHabit.habit_id)
         .all()
     )
-    log = normalize_log_times(log)
     # This is *very* optimized for my use case.  For more details, see the
     # comment for LOCAL_TIMEZONE.
     return render_template(
