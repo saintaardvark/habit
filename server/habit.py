@@ -59,8 +59,7 @@ class LoggedHabit(db.Model):
     # FIXME: I'm not sure that the timezone=True is working the way I
     # want it to.  See:
     # - https://docs.sqlalchemy.org/en/14/dialects/sqlite.html
-    # - https://docs.sqlalchemy.org/en/14/dialects/sqlite.html
-    log_time: datetime = db.Column(TimeStamp, default=datetime.utcnow)
+    log_time: datetime = db.Column(TimeStamp, default=datetime.utcnow())
 
 
 db.create_all()
