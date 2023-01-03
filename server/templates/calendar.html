@@ -32,7 +32,7 @@
       <tbody>
         {% for line in log %}
 	<tr>
-	  <td>{{ line.log_time }} </td>
+	  <td>{{ line.log_time.astimezone(local_timezone) }} </td>
 	</tr>
         {% endfor %}
       </tbody>

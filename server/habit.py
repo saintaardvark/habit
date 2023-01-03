@@ -134,8 +134,10 @@ def calendar(habit_id):
         .all()
     )
     log = normalize_log_times(log)
+    # This is *very* optimized for my use case.  For more details, see the
+    # comment for LOCAL_TIMEZONE.
     return render_template(
-        "calendar.html", log=log, habit_id=habit_id, habitname=habit.habitname
+        "calendar.html", log=log, habit_id=habit_id, habitname=habit.habitname, local_timezone=LOCAL_TIMEZONE
     )
 
 
