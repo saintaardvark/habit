@@ -7,3 +7,6 @@ serve: venv
 
 db:
 	sqlite3 server/habits.db
+
+test:
+	pytest

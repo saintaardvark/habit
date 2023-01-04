@@ -73,6 +73,87 @@ TEST_HABITS = ["veggie meal", "stretches", "cardio exercise"]
 #     db.session.commit()
 
 
+# FIXME: These streak calculations should be broken out to another file; need to figure out
+# imports for that.
+def get_logs_for_habit(habit_id):
+    """
+    Given a habit ID, return a list of times it was logged.
+    Returns:
+    - list of ordinals for dates...
+    - ...sorted in reverse order.
+    """
+    log = (
+        db.session.query(
+            LoggedHabit.log_time.label("log_time"),
+        )
+        .where(Habit.id == habit_id)
+        .where(Habit.id == LoggedHabit.habit_id)
+        .group_by(db.func.strftime("%Y-%m-%d", LoggedHabit.log_time))
+        .order_by(LoggedHabit.log_time.desc())
+        .all()
+    )
+    list_of_dates = list(set([logtime[0].toordinal() for logtime in log]))
+    list_of_dates.sort()
+    list_of_dates.reverse()
+    return list_of_dates
+
+
+def calculate_current_streaks(habits):
+    """
+    Return a count of how many days each habit has been done without interruption.
+    """
+    habit_logs = {}
+    for habit in habits:
+        habit_logs[habit.id] = get_logs_for_habit(habit.id)
+
+    return get_streaks_for_habits(habit_logs)
+
+
+def get_streaks_for_habits(habit_logs):
+    """
+    Given a list of logs, return the streak for each one.
+    """
+    streaks = {}
+
+    for habit in habit_logs.keys():
+        streak_count = 0
+        list_of_dates = get_logs_for_habit(habit)
+        streak_count = get_streak_for_single_habit(list_of_dates)
+        streaks[habit] = streak_count
+
+    return streaks
+
+
+def get_streak_for_single_habit(list_of_dates, today=datetime.now().toordinal()):
+    """
+    Calculate the streak for a single habit.
+    """
+    # Sad case
+    streak_count = 0
+    if len(list_of_dates) == 0:
+        app.logger.debug("Zero length list_of_dates, streak 0")
+        return 0
+
+    latest_date = list_of_dates[0]
+
+    if today - latest_date > 1:
+        # The streak ended more than 1 day ago.  Return 0, as you have no chance to make it up.
+        return 0
+
+    streak_count = 1
+    previous_date = list_of_dates[0]
+    for i in range(1, len(list_of_dates)):
+        if previous_date - list_of_dates[i] == 1:
+            streak_count += 1
+            previous_date = list_of_dates[i]
+        else:
+            break
+
+    app.logger.debug(f"{streak_count=}")
+
+    return streak_count
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     """
