@@ -216,6 +216,7 @@ def log(habit_id):
         new_log = LoggedHabit(habit_id=habit_id)
         db.session.add(new_log)
         db.session.commit()
+
     log = (
         db.session.query(
             db.func.count(Habit.id).label("count"),
@@ -227,6 +228,7 @@ def log(habit_id):
         .group_by(db.func.strftime("%Y-%m-%d", LoggedHabit.log_time))
         .all()
     )
+
     return_data = {x["log_time"].strftime("%s"): x["count"] for x in log}
     return return_data
 
