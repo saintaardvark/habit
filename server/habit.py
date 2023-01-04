@@ -175,8 +175,10 @@ def index():
         .group_by(Habit.id)
         .all()
     )
-
-    return render_template("habits.html", habits=habits, local_timezone=LOCAL_TIMEZONE)
+    streaks = calculate_current_streaks(habits)
+    return render_template(
+        "habits.html", habits=habits, local_timezone=LOCAL_TIMEZONE, streaks=streaks
+    )
 
 
 @app.route("/calendar/<habit_id>")
