@@ -42,12 +42,13 @@ Note: this uses (ie, hardcodes) use of an SQLite3 database file named
 
 * I really should be using a WSGI server.
 
-* TODO: Use timezones in dates.  Better timestamp formatting.
-
 * TODO: Add authentication.  Currently there's no authentication at
   all...zero.
 
-* TODO: Allow user to delete or rename a habit.
+* TODO: Habits can be deleted, but the way I'm doing that is by
+  deleting the whole row in habit, but not log...which means that the
+  next time you add a row, you end up with the log from the *last*
+  habit that had that ID.
 
 * TODO: Allow user to delete or update a log entry.
 
