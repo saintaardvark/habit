@@ -38,8 +38,11 @@ class TimeStamp(db.TypeDecorator):
         return value
 
     def process_result_value(self, value, dialect):
-        if value.tzinfo is None:
-            return value.replace(tzinfo=timezone.utc)
+        try:
+            if value.tzinfo is None:
+                return value.replace(tzinfo=timezone.utc)
+        except AttributeError:
+            return value
 
         return value.astimezone(timezone.utc)
 

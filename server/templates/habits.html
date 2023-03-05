@@ -19,7 +19,13 @@
 	  </h2>
 	</div>
 	<div class="col-sm" id="container-habit-last-done-{{ habit.id }}">
-	  <p>Last done: {{ habit.log_time.astimezone(local_timezone) }}</p>
+	  <p>Last done:
+	    {% if habit.log_time is not none %}
+	    {{ habit.log_time.astimezone(local_timezone) }}
+	    {% else %}
+	    Never
+	    {% endif %}
+	  </p>
 	  <p>Current streak: {{ streaks[habit.id] }}</p>
 	</div>
 	<div class="col-sm" id="container-delete-habit-{{ habit.id }}">
