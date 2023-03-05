@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask, jsonify, redirect, request, render_template, url_for
+from flask import Flask, jsonify, request, render_template
 
 from server.model.model import db, Habit, LoggedHabit, LOCAL_TIMEZONE
 
