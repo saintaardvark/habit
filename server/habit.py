@@ -248,6 +248,7 @@ def habit(habit_id):
 
     elif request.method == "DELETE":
         Habit.query.filter_by(id=habit_id).delete()
+        LoggedHabit.query.filter_by(habit_id=habit_id).delete()
         db.session.commit()
         return {}
 
