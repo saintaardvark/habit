@@ -6,13 +6,40 @@ from flask_sqlalchemy import SQLAlchemy
 
 # from classes import Habit
 
-app = Flask(__name__)
-db = SQLAlchemy(app)
+APP_SETTINGS = {
+    "SQLALCHEMY_DATABASE_URI": "sqlite:///habits.db",
+    "TEMPLATE_AUTO_RELOAD": True,
+    "DEBUG": True,
+}
+
+TEST_HABITS = ["veggie meal", "stretches", "cardio exercise"]
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///habits.db"
-app.config["TEMPLATE_AUTO_RELOAD"] = True
-app.config["DEBUG"] = True
+def create_app(settings=APP_SETTINGS):
+    """
+    Factory pattern for app making
+    """
+    app = Flask(__name__)
+
+    # TODO: This is not the recommended way of doing things; see:
+    # https://flask.palletsprojects.com/en/2.2.x/config/
+    # https://flask.palletsprojects.com/en/2.2.x/api/#flask.Config.from_object
+    for k, v in settings.items():
+        app.config[k] = v
+    return app
+
+
+def create_db(app):
+    """
+    Factory pattern for db making
+    """
+    db = SQLAlchemy(app)
+    db.create_all()
+    return db
+
+app = create_app()
+db = create_db(app)
+
 
 # Note:  We're setting the timezone based on where the serve is running.
 # This is *heavily* optimized for my use case, where:
@@ -64,16 +91,6 @@ class LoggedHabit(db.Model):
     # want it to.  See:
     # - https://docs.sqlalchemy.org/en/14/dialects/sqlite.html
     log_time: datetime = db.Column(TimeStamp, default=datetime.utcnow)
-
-
-db.create_all()
-TEST_HABITS = ["veggie meal", "stretches", "cardio exercise"]
-
-# TODO: Only needed the once...
-# for habit in TEST_HABITS:
-#     new_entry = Habit(habitname=habit)
-#     db.session.add(new_entry)
-#     db.session.commit()
 
 
 # FIXME: These streak calculations should be broken out to another file; need to figure out
