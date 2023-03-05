@@ -3,6 +3,7 @@ from datetime import datetime
 from flask import Flask, jsonify, request, render_template
 
 from server.model.model import db, Habit, LoggedHabit, LOCAL_TIMEZONE
+from .utils import delete_habit_and_logs
 
 # from classes import Habit
 
@@ -212,9 +213,7 @@ def habit(habit_id):
         return jsonify(habit)
 
     elif request.method == "DELETE":
-        Habit.query.filter_by(id=habit_id).delete()
-        LoggedHabit.query.filter_by(habit_id=habit_id).delete()
-        db.session.commit()
+        delete_habit_and_logs(habit_id)
         return {}
 
 
