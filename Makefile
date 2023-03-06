@@ -8,5 +8,6 @@ serve: venv
 db:
 	sqlite3 server/habits.db
 
+# FIXME: Put this in pytest.ini or some such
 test:
-	pytest
+	pytest --disable-warnings
