@@ -4,6 +4,39 @@
 
 <div class="page-header">
   <h1>Habits</h1>
+  <div id="habit_streaks">
+    <div class="row row-cols-1 row-cols-md-2 mb-3 text-center">
+      {% for habit in habits %}
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">{{ habit.habitname }}</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">
+	      {{ streaks[habit.id] }}
+	      <small class="text-muted fw-light">
+		{% if streaks[habit.id] == 1 %}
+		day
+		{% else %}
+		days
+		{% endif %}
+		in a row
+	      </small>
+	    </h1>
+            <button type="button" class="w-100 btn btn-lg btn-outline-primary" onclick="incrementHabit({{ habit.id }})">
+	      {% if streaks[habit.id] == 0 %}
+		You can do better!
+		{% else %}
+		Keep going, champ!
+		{% endif %}
+	    </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
   <div id="habit_list">
     <link rel="stylesheet" href="/static/css/cal-heatmap.css" />
     <script type="text/javascript" src="/static/js/d3.min.js" charset="utf-8"></script>
